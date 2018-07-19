@@ -14,3 +14,15 @@ class FluidProperties():
 	
 	def getViscosity(self, fluid_name):
 		return self.PROPERTIES[fluid_name][2]
+
+class ChannelTypes():
+	VALID_CHANNEL_TYPES = ("rectangle")
+
+	def getValidChannelType(self):
+		return self.VALID_CHANNEL_TYPES
+
+	def isChannelTypeValid(self, channelType):
+		return channelType in self.VALID_CHANNEL_TYPES
+
+# TODO: Tjunction
+
