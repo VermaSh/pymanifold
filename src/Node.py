@@ -233,11 +233,11 @@ class Node():
         return self.exprs
 
 
-    def append_outgoing_connection(self, outgoing_connection):
-        self.outgoing_channels[outgoing_connection.get_name()] = outgoing_connection
+    def append_outgoing_channel(self, outgoing_channel):
+        self.outgoing_channels[outgoing_channel.get_name()] = outgoing_connection
 
-    def append_incoming_connection(self, incoming_connection):
-        self.incoming_channels[incoming_connection.get_name()] = incoming_connection
+    def append_incoming_channel(self, incoming_channel):
+        self.incoming_channels[incoming_channel.get_name()] = incoming_channel
 
     class TJunction():
         # cosine_law_crit_angle
