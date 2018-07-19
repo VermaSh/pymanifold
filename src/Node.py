@@ -30,8 +30,8 @@ class Node():
         if kind.lower() not in self.translation_strats.keys():
             raise ValueError("kind must be %s" % self.translation_strats.keys())
 
-        self.incomming_connections = {}
-        self.outgoing_connections = {}
+        self.incoming_channels = {}
+        self.outgoing_channels = {}
         self.attributes = {}
 
         # Ports are stored with nodes because ports are just a specific type of
@@ -156,7 +156,7 @@ class Node():
 
         # Pressure at a node is the sum of the pressures flowing into it
         output_pressures = []
-        for incoming_connection in self.incoming_connections: # Shubham - Call incoming connections here
+        for incoming_connection in self.incoming_channels: # Shubham - Call incoming connections here
             # This returns the nodes with channels that flowing into this node
             # pressure calculated based on P=QR
             # Could modify equation based on https://www.dolomite-microfluidics.com/wp-content/uploads/Droplet_Junction_Chip_characterisation_-_application_note.pdf
@@ -234,10 +234,10 @@ class Node():
 
 
     def append_outgoing_connection(self, outgoing_connection):
-        self.outgoing_connections[outgoing_connection.get_name()] = outgoing_connection
+        self.outgoing_channels[outgoing_connection.get_name()] = outgoing_connection
 
     def append_incoming_connection(self, incoming_connection):
-        self.incoming_connections[incoming_connection.get_name()] = incoming_connection
+        self.incoming_channels[incoming_connection.get_name()] = incoming_connection
 
     class TJunction():
         # cosine_law_crit_angle
