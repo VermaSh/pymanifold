@@ -326,14 +326,9 @@ class Channel():
         currently only works for channels with a rectangular shape, but should
         be expanded to include circular and parabolic
 
-        :param str name: The name of the channel to generate SMT equations for
         :returns: None -- no issues with translating channel parameters to SMT
         :raises: KeyError, if channel is not found in the list of defined edges
         """
-
-        # Name is just a string, this gets the corresponding dictionary of
-        # attributes and their values stored by NetworkX
-
 
         # Create expression to force length to equal distance between end nodes
         self.exprs.append(self.pythagorean_length())
@@ -383,6 +378,7 @@ class Channel():
                                  self.get_port_in().get_flow_rate()))
 
         # Channels do not have pressure because it decreases across channel
+        
         # Call translate on the input to continue traversing the channel
         self.exprs.append(self.get_port_in().translate())
         
