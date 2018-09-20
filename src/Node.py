@@ -25,8 +25,11 @@ class Node():
         # Checking that arguments are valid
         if not isinstance(name, str) or not isinstance(kind, str):
             raise TypeError("name and kind must be strings")
-        if name in self.dg.nodes:
-            raise ValueError("Must provide a unique name")
+        
+        #TODO: Need to figure out a way to deal with this
+        # if name in self.dg.nodes:
+        #     raise ValueError("Must provide a unique name")
+        
         if kind.lower() not in self.translation_strats.keys():
             raise ValueError("kind must be %s" % self.translation_strats.keys())
 
@@ -146,11 +149,11 @@ class Node():
     def get_min_y(self):
         return self.attributes['min_y']
 
-    def translate(self):
+    def translate(self, dim):
         """Create SMT expressions for bounding the parameters of an node
         to be within the constraints defined by the user
 
-        :param name: Name of the node to be constrained
+        :param dim: dimentions of the chip within which we need to constraint the node
         :returns: None -- no issues with translating the port parameters to SMT
         """
 
@@ -229,17 +232,25 @@ class Node():
         else:
             # else, node density must be positive
             self.exprs.append(GT(self.get_density(), Real(0)))
+
+
+        self.exprs.append(GE(self.get_x(), Real(self.dim[0])))
+        self.exprs.append(GE(self.get_y(), Real(self.dim[1])))
+        self.exprs.append(LE(self.get_x(), Real(self.dim[2])))
+        self.exprs.append(LE(self.get_y(), Real(self.dim[3])))
         
         return self.exprs
 
-
     def append_outgoing_channel(self, outgoing_channel):
+        #TODO: check for duplicates, to avoid overwritting them
         self.outgoing_channels[outgoing_channel.get_name()] = outgoing_connection
 
+    def get_outgoing_channels(self):
+        return self.outgoing_channels
+
     def append_incoming_channel(self, incoming_channel):
+        #TODO: check for duplicates, to avoid overwritting them
         self.incoming_channels[incoming_channel.get_name()] = incoming_channel
 
-    class TJunction():
-        # cosine_law_crit_angle
-
-
+    def get_incoming_channels(self):
+        return self.incoming_channels
